@@ -1,0 +1,444 @@
+{% extends 'base.html' %}
+
+{% block title %}EchoTrack - 数据概览{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>评论分析概览</h5>
+                <div class="d-flex align-items-center">
+                    <div class="me-2">
+                        <select id="keywordFilter" class="form-select form-select-sm">
+                            <option value="">所有关键词</option>
+                            <!-- 关键词列表将通过JS动态加载 -->
+                        </select>
+                    </div>
+                    <button id="refreshBtn" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-sync-alt"></i> 刷新
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="loadingIndicator" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">加载中...</span>
+                    </div>
+                    <p class="mt-2">加载数据中，请稍候...</p>
+                </div>
+                <div id="noDataMessage" class="text-center py-5 d-none">
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle fa-2x mb-3"></i>
+                        <h5>暂无分析数据</h5>
+                        <p>请先在设置页面添加关键词和标签，并等待爬虫模块收集评论数据。</p>
+                        <a href="/settings" class="btn btn-primary">
+                            <i class="fas fa-cog me-1"></i>前往设置
+                        </a>
+                    </div>
+                </div>
+                <div id="dataContainer" class="d-none">
+                    <!-- 数据摘要卡片 -->
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card status-card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-thumbs-up text-success fa-2x mb-2"></i>
+                                    <h6 class="card-title">正面评价</h6>
+                                    <h3 id="positiveCount" class="mb-0">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card status-card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-thumbs-down text-danger fa-2x mb-2"></i>
+                                    <h6 class="card-title">负面评价</h6>
+                                    <h3 id="negativeCount" class="mb-0">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card status-card bg-light mb-3">
+                                <div class="card-body text-center">
+                                    <i class="fas fa-balance-scale text-warning fa-2x mb-2"></i>
+                                    <h6 class="card-title">中性评价</h6>
+                                    <h3 id="neutralCount" class="mb-0">0</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 整体分布饼图 -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-chart-pie me-2"></i>评论标签整体分布</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="overallPieChart" style="width: 100%; height: 400px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 各标签对比柱状图 -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>各标签对比分析</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div id="tagComparisonBarChart" style="width: 100%; height: 500px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// 全局变量
+let currentKeywordId = '';
+let chartData = [];
+
+// 初始化函数
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载关键词列表
+    loadKeywords();
+    
+    // 加载标签统计数据
+    loadStats();
+    
+    // 设置刷新按钮事件
+    document.getElementById('refreshBtn').addEventListener('click', function() {
+        // 添加旋转动画
+        const icon = this.querySelector('i');
+        icon.classList.add('fa-spin');
+        
+        // 加载数据
+        loadStats().finally(() => {
+            // 停止旋转动画
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+            }, 500);
+            
+            // 显示成功消息
+            showToast('数据已刷新', 'success');
+        });
+    });
+    
+    // 设置关键词筛选事件
+    document.getElementById('keywordFilter').addEventListener('change', function() {
+        currentKeywordId = this.value;
+        loadStats();
+    });
+    
+    // 设置自动刷新 (每60秒)
+    setInterval(loadStats, 60000);
+    
+    // 响应窗口大小变化，重绘图表
+    window.addEventListener('resize', function() {
+        if (window.overallPieChart) {
+            window.overallPieChart.resize();
+        }
+        if (window.tagComparisonChart) {
+            window.tagComparisonChart.resize();
+        }
+    });
+});
+
+// 加载关键词列表
+function loadKeywords() {
+    fetch('/api/keywords')
+        .then(response => response.json())
+        .then(data => {
+            const selectElement = document.getElementById('keywordFilter');
+            
+            // 清空现有选项（保留"所有关键词"选项）
+            selectElement.innerHTML = '<option value="">所有关键词</option>';
+            
+            // 添加关键词选项
+            data.forEach(keyword => {
+                const option = document.createElement('option');
+                option.value = keyword.id;
+                option.textContent = keyword.keyword;
+                selectElement.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('加载关键词失败:', error);
+            showToast('加载关键词失败', 'danger');
+        });
+}
+
+// 加载标签统计数据
+function loadStats() {
+    // 显示加载指示器
+    document.getElementById('loadingIndicator').classList.remove('d-none');
+    document.getElementById('dataContainer').classList.add('d-none');
+    document.getElementById('noDataMessage').classList.add('d-none');
+    
+    // 构建URL
+    let url = '/api/stats';
+    if (currentKeywordId) {
+        url += `?keyword_id=${currentKeywordId}`;
+    }
+    
+    // 获取数据
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // 保存数据
+            chartData = data;
+            
+            // 隐藏加载指示器
+            document.getElementById('loadingIndicator').classList.add('d-none');
+            
+            // 检查是否有数据
+            if (data.length === 0 || data.every(item => item.total === 0)) {
+                document.getElementById('noDataMessage').classList.remove('d-none');
+                return;
+            }
+            
+            // 显示数据容器
+            document.getElementById('dataContainer').classList.remove('d-none');
+            
+            // 更新数据摘要
+            updateSummaryCards(data);
+            
+            // 渲染图表
+            renderOverallPieChart(data);
+            renderTagComparisonBarChart(data);
+        })
+        .catch(error => {
+            console.error('加载统计数据失败:', error);
+            document.getElementById('loadingIndicator').classList.add('d-none');
+            document.getElementById('noDataMessage').classList.remove('d-none');
+            showToast('加载统计数据失败', 'danger');
+        });
+}
+
+// 更新数据摘要卡片
+function updateSummaryCards(data) {
+    // 计算总的正面、负面和中性评论数量
+    let totalPositive = 0;
+    let totalNegative = 0;
+    let totalNone = 0;
+    
+    data.forEach(item => {
+        totalPositive += item.positive_count;
+        totalNegative += item.negative_count;
+        totalNone += item.none_count;
+    });
+    
+    // 更新数量显示
+    document.getElementById('positiveCount').textContent = totalPositive;
+    document.getElementById('negativeCount').textContent = totalNegative;
+    document.getElementById('neutralCount').textContent = totalNone;
+}
+
+// 渲染整体分布饼图
+function renderOverallPieChart(data) {
+    // 计算总的正面、负面和中性评论数量
+    let totalPositive = 0;
+    let totalNegative = 0;
+    let totalNone = 0;
+    
+    data.forEach(item => {
+        totalPositive += item.positive_count;
+        totalNegative += item.negative_count;
+        totalNone += item.none_count;
+    });
+    
+    // 初始化图表
+    const chartDom = document.getElementById('overallPieChart');
+    window.overallPieChart = echarts.init(chartDom);
+    
+    // 设置图表选项
+    const option = {
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b}: {c} ({d}%)'
+        },
+        legend: {
+            orient: 'horizontal',
+            bottom: 'bottom',
+            data: ['正面评价', '负面评价', '中性评价'],
+            icon: 'circle',
+            textStyle: {
+                fontSize: 14
+            }
+        },
+        color: ['#42b883', '#e74c3c', '#f1c40f'],
+        series: [
+            {
+                name: '评价分布',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                itemStyle: {
+                    borderRadius: 10,
+                    borderColor: '#fff',
+                    borderWidth: 2
+                },
+                label: {
+                    show: true,
+                    formatter: '{b}: {c} ({d}%)',
+                    fontSize: 14,
+                    fontWeight: 'bold'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 18,
+                        fontWeight: 'bold'
+                    },
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                },
+                labelLine: {
+                    show: true
+                },
+                data: [
+                    { value: totalPositive, name: '正面评价' },
+                    { value: totalNegative, name: '负面评价' },
+                    { value: totalNone, name: '中性评价' }
+                ],
+                animationType: 'scale',
+                animationEasing: 'elasticOut',
+                animationDelay: function (idx) {
+                    return Math.random() * 200;
+                }
+            }
+        ]
+    };
+    
+    // 渲染图表
+    window.overallPieChart.setOption(option);
+}
+
+// 渲染标签对比柱状图
+function renderTagComparisonBarChart(data) {
+    // 准备数据
+    const categories = [];
+    const positiveData = [];
+    const negativeData = [];
+    
+    data.forEach(item => {
+        if (item.total > 0) {  // 只显示有数据的标签
+            categories.push(`${item.positive_tag} / ${item.negative_tag}`);
+            positiveData.push(item.positive_count);
+            negativeData.push(item.negative_count);
+        }
+    });
+    
+    // 初始化图表
+    const chartDom = document.getElementById('tagComparisonBarChart');
+    window.tagComparisonChart = echarts.init(chartDom);
+    
+    // 设置图表选项
+    const option = {
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['正面评价', '负面评价'],
+            icon: 'roundRect',
+            bottom: 0
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            name: '评论数量',
+            nameLocation: 'middle',
+            nameGap: 30,
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        yAxis: {
+            type: 'category',
+            data: categories,
+            axisLabel: {
+                fontSize: 12
+            }
+        },
+        color: ['#42b883', '#e74c3c'],
+        series: [
+            {
+                name: '正面评价',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                emphasis: {
+                    focus: 'series',
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.2)'
+                    }
+                },
+                data: positiveData,
+                itemStyle: {
+                    borderRadius: [0, 4, 4, 0]
+                },
+                animationDelay: function (idx) {
+                    return idx * 50;
+                }
+            },
+            {
+                name: '负面评价',
+                type: 'bar',
+                stack: 'total',
+                label: {
+                    show: true,
+                    position: 'insideRight'
+                },
+                emphasis: {
+                    focus: 'series',
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowColor: 'rgba(0, 0, 0, 0.2)'
+                    }
+                },
+                data: negativeData,
+                itemStyle: {
+                    borderRadius: [0, 4, 4, 0]
+                },
+                animationDelay: function (idx) {
+                    return idx * 50 + 100;
+                }
+            }
+        ],
+        animationEasing: 'elasticOut',
+        animationDelayUpdate: function (idx) {
+            return idx * 5;
+        }
+    };
+    
+    // 渲染图表
+    window.tagComparisonChart.setOption(option);
+}
+</script>
+{% endblock %} 

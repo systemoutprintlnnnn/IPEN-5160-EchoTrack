@@ -1,48 +1,98 @@
-# IPEN-5160-EchoTrack
-A real-time comment monitoring tool designed to collect and analyze user sentiments
+# EchoTrack - 评论分析跟踪系统
 
-## 项目说明
-这是一个B站视频评论爬虫工具，可以按关键词搜索视频并爬取视频下的所有评论数据，支持定时任务和断点续传功能。
+EchoTrack是一个自动化评论分析系统，能够根据用户设定的关键词爬取哔哩哔哩平台的评论数据，通过大语言模型对评论进行标签分类，并通过可视化界面展示分析结果。
 
-## 功能特点
-- 根据关键词搜索B站视频
-- 抓取视频下所有评论数据
-- 支持定时任务，可配置爬取频率
-- 断点续传，避免重复爬取
-- 数据自动存储到MongoDB数据库
-- 多级重试机制，提高爬取成功率
+## 系统架构
 
-## 安装与配置
+系统分为三个主要模块：
+
+1. **爬虫模块（scrape）**：负责从哔哩哔哩定时爬取最新评论
+2. **标注模块（label）**：调用OpenAI API为评论打上用户定义的标签
+3. **前端模块（frontend）**：提供用户界面，展示评论分析结果
+
+## 功能特性
+
+- 支持多关键词评论爬取
+- 支持用户自定义标签对
+- 使用OpenAI API进行智能评论分类
+- 直观的数据可视化展示
+- 实时数据更新和监控
+
+## 环境要求
+
+- Python 3.8+
+- MongoDB（用于存储爬虫数据）
+- OpenAI API密钥
+- 网络连接（用于API调用和网页爬取）
+
+## 快速开始
 
 ### 1. 安装依赖
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2. 配置MongoDB
-确保您的计算机已安装并启动MongoDB服务，默认连接地址为`mongodb://localhost:27017/`。
+### 2. 配置环境变量
 
-### 3. 修改配置文件
-配置文件位于`scrape/config.py`，您可以根据需要修改以下配置：
-- `BILIBILI_CREDENTIALS`: B站API凭证信息
-- `DB_CONFIG`: 数据库配置
-- `SCRAPE_CONFIG`: 爬取配置，包括关键词、爬取间隔等
+在项目根目录创建`.env`文件，内容如下：
 
-### 4. 启动爬虫
-```bash
-python start_scraper.py
+```
+# OpenAI配置
+OPENAI_API_KEY=your_api_key_here
+OPENAI_MODEL=gpt-3.5-turbo
+
+# MongoDB配置
+MONGO_URI=mongodb://localhost:27017/
+MONGO_DB_NAME=bilibili
+MONGO_COLLECTION=video_comments_ipen_5160
 ```
 
-## 配置说明
+### 3. 启动系统
 
-### 爬取间隔
-在`scrape/config.py`中修改`SCRAPE_CONFIG["SCRAPE_INTERVAL_MINUTES"]`的值以调整爬虫执行频率。
+```bash
+python run.py
+```
 
-### 关键词设置
-在`scrape/config.py`中修改`SCRAPE_CONFIG["KEYWORDS"]`列表以设置要搜索的关键词。
+启动后，访问 http://localhost:5000 打开前端界面
 
-### 搜索页数范围
-在`scrape/config.py`中修改`SCRAPE_CONFIG["PAGE_RANGE"]`元组以设置要搜索的页数范围。
+## 配置选项
 
-## 日志
-爬虫运行日志保存在`scrape/scraper.log`文件中，可随时查看爬取状态。
+启动脚本支持以下命令行参数：
+
+- `--no-scraper`：不启动爬虫服务
+- `--no-labeler`：不启动标注服务
+- `--no-bridge`：不启动数据桥接服务
+- `--no-frontend`：不启动前端服务
+
+示例：
+
+```bash
+# 只启动前端和标注服务
+python run.py --no-scraper --no-bridge
+```
+
+## 目录结构
+
+```
+IPEN-5160-EchoTrack/
+├── run.py              # 主启动脚本
+├── requirements.txt    # 项目依赖
+├── .env                # 环境配置文件
+├── env_config.py       # 环境配置加载模块
+├── data/               # 数据存储目录
+├── scrape/             # 爬虫模块
+├── label/              # 标注模块
+└── frontend/           # 前端模块
+```
+
+## 使用方法
+
+1. 在设置页面添加关键词和标签对
+2. 爬虫会自动从哔哩哔哩获取相关评论
+3. 标注服务会为评论自动添加标签
+4. 在主页查看数据分析结果
+
+## 许可证
+
+[MIT License](LICENSE) 

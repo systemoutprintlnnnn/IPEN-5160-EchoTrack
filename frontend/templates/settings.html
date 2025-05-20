@@ -1,0 +1,386 @@
+{% extends 'base.html' %}
+
+{% block title %}EchoTrack - 系统设置{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <!-- 关键词管理 -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tags me-2"></i>关键词管理</h5>
+            </div>
+            <div class="card-body">
+                <form id="keywordForm" class="mb-4">
+                    <div class="mb-3">
+                        <label for="keywordInput" class="form-label">添加新关键词</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            <input type="text" class="form-control" id="keywordInput" placeholder="例如：iPhone 15" required>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus me-1"></i>添加
+                            </button>
+                        </div>
+                        <div class="form-text"><i class="fas fa-info-circle me-1"></i>添加需要爬取评论的关键词（产品名称等）</div>
+                    </div>
+                </form>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>关键词</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keywordsList">
+                            <tr>
+                                <td colspan="2" class="text-center">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="visually-hidden">加载中...</span>
+                                    </div>
+                                    <span class="ms-2">加载中...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 标签管理 -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-tags me-2"></i>标签管理</h5>
+            </div>
+            <div class="card-body">
+                <form id="tagForm" class="mb-4">
+                    <div class="mb-3">
+                        <label class="form-label">添加标签对</label>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text"><i class="fas fa-thumbs-up text-success"></i></span>
+                            <input type="text" class="form-control" id="positiveTagInput" placeholder="例如：动力好" required>
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fas fa-thumbs-down text-danger"></i></span>
+                            <input type="text" class="form-control" id="negativeTagInput" placeholder="例如：动力差" required>
+                        </div>
+                        <div class="form-text"><i class="fas fa-info-circle me-1"></i>添加成对的标签，用于评论分类</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>添加标签对
+                    </button>
+                </form>
+                
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>正面标签</th>
+                                <th>负面标签</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tagsList">
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="visually-hidden">加载中...</span>
+                                    </div>
+                                    <span class="ms-2">加载中...</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 系统状态 -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-server me-2"></i>系统状态</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card status-card mb-3">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tag fa-2x mb-2 text-primary"></i>
+                                <h6 class="card-title">关键词数量</h6>
+                                <h3 id="keywordCount" class="mb-0">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card status-card mb-3">
+                            <div class="card-body text-center">
+                                <i class="fas fa-tags fa-2x mb-2 text-primary"></i>
+                                <h6 class="card-title">标签对数量</h6>
+                                <h3 id="tagCount" class="mb-0">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card status-card mb-3">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clock fa-2x mb-2 text-primary"></i>
+                                <h6 class="card-title">最后更新时间</h6>
+                                <h3 id="lastUpdateTime" class="mb-0">-</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// 初始化函数
+document.addEventListener('DOMContentLoaded', function() {
+    // 加载关键词和标签
+    loadKeywords();
+    loadTags();
+    
+    // 设置表单提交事件
+    document.getElementById('keywordForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        addKeyword();
+    });
+    
+    document.getElementById('tagForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        addTagPair();
+    });
+    
+    // 更新系统状态
+    updateSystemStatus();
+    
+    // 设置删除按钮的事件委托
+    document.addEventListener('click', function(e) {
+        // 删除关键词
+        if (e.target.classList.contains('delete-keyword') || e.target.parentElement.classList.contains('delete-keyword')) {
+            const btn = e.target.classList.contains('delete-keyword') ? e.target : e.target.parentElement;
+            const id = btn.dataset.id;
+            if (confirm('确定要删除这个关键词吗？')) {
+                deleteKeyword(id);
+            }
+        }
+        
+        // 删除标签对
+        if (e.target.classList.contains('delete-tag') || e.target.parentElement.classList.contains('delete-tag')) {
+            const btn = e.target.classList.contains('delete-tag') ? e.target : e.target.parentElement;
+            const id = btn.dataset.id;
+            if (confirm('确定要删除这个标签对吗？')) {
+                deleteTag(id);
+            }
+        }
+    });
+});
+
+// 加载关键词列表
+function loadKeywords() {
+    fetch('/api/keywords')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('keywordsList');
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="2" class="text-center">暂无关键词</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            
+            data.forEach(keyword => {
+                const row = document.createElement('tr');
+                
+                // 关键词列
+                const keywordCell = document.createElement('td');
+                keywordCell.textContent = keyword.keyword;
+                row.appendChild(keywordCell);
+                
+                // 操作列
+                const actionCell = document.createElement('td');
+                actionCell.innerHTML = `
+                    <button class="btn btn-sm btn-outline-danger delete-keyword" data-id="${keyword.id}">
+                        <i class="fas fa-trash-alt"></i> 删除
+                    </button>
+                `;
+                row.appendChild(actionCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            // 更新关键词计数
+            document.getElementById('keywordCount').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('加载关键词失败:', error);
+            document.getElementById('keywordsList').innerHTML = 
+                '<tr><td colspan="2" class="text-center text-danger">加载失败</td></tr>';
+            showToast('加载关键词失败', 'danger');
+        });
+}
+
+// 添加新关键词
+function addKeyword() {
+    const keywordInput = document.getElementById('keywordInput');
+    const keyword = keywordInput.value.trim();
+    
+    if (!keyword) return;
+    
+    fetch('/api/keywords', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ keyword })
+    })
+    .then(response => response.json())
+    .then(data => {
+        keywordInput.value = '';
+        loadKeywords();
+        showToast('关键词添加成功', 'success');
+    })
+    .catch(error => {
+        console.error('添加关键词失败:', error);
+        showToast('添加关键词失败', 'danger');
+    });
+}
+
+// 删除关键词
+function deleteKeyword(id) {
+    fetch(`/api/keywords/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            loadKeywords();
+            showToast('关键词删除成功', 'success');
+        } else {
+            throw new Error('删除失败');
+        }
+    })
+    .catch(error => {
+        console.error('删除关键词失败:', error);
+        showToast('删除关键词失败', 'danger');
+    });
+}
+
+// 加载标签列表
+function loadTags() {
+    fetch('/api/tags')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('tagsList');
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="3" class="text-center">暂无标签对</td></tr>';
+                return;
+            }
+            
+            tableBody.innerHTML = '';
+            
+            data.forEach(tag => {
+                const row = document.createElement('tr');
+                
+                // 正面标签列
+                const positiveCell = document.createElement('td');
+                positiveCell.innerHTML = `<span class="badge bg-success"><i class="fas fa-thumbs-up me-1"></i>${tag.positive_tag}</span>`;
+                row.appendChild(positiveCell);
+                
+                // 负面标签列
+                const negativeCell = document.createElement('td');
+                negativeCell.innerHTML = `<span class="badge bg-danger"><i class="fas fa-thumbs-down me-1"></i>${tag.negative_tag}</span>`;
+                row.appendChild(negativeCell);
+                
+                // 操作列
+                const actionCell = document.createElement('td');
+                actionCell.innerHTML = `
+                    <button class="btn btn-sm btn-outline-danger delete-tag" data-id="${tag.id}">
+                        <i class="fas fa-trash-alt"></i> 删除
+                    </button>
+                `;
+                row.appendChild(actionCell);
+                
+                tableBody.appendChild(row);
+            });
+            
+            // 更新标签计数
+            document.getElementById('tagCount').textContent = data.length;
+        })
+        .catch(error => {
+            console.error('加载标签失败:', error);
+            document.getElementById('tagsList').innerHTML = 
+                '<tr><td colspan="3" class="text-center text-danger">加载失败</td></tr>';
+            showToast('加载标签失败', 'danger');
+        });
+}
+
+// 添加新标签对
+function addTagPair() {
+    const positiveTagInput = document.getElementById('positiveTagInput');
+    const negativeTagInput = document.getElementById('negativeTagInput');
+    
+    const positive_tag = positiveTagInput.value.trim();
+    const negative_tag = negativeTagInput.value.trim();
+    
+    if (!positive_tag || !negative_tag) return;
+    
+    fetch('/api/tags', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ positive_tag, negative_tag })
+    })
+    .then(response => response.json())
+    .then(data => {
+        positiveTagInput.value = '';
+        negativeTagInput.value = '';
+        loadTags();
+        showToast('标签对添加成功', 'success');
+    })
+    .catch(error => {
+        console.error('添加标签对失败:', error);
+        showToast('添加标签对失败', 'danger');
+    });
+}
+
+// 删除标签对
+function deleteTag(id) {
+    fetch(`/api/tags/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => {
+        if (response.ok) {
+            loadTags();
+            showToast('标签对删除成功', 'success');
+        } else {
+            throw new Error('删除失败');
+        }
+    })
+    .catch(error => {
+        console.error('删除标签对失败:', error);
+        showToast('删除标签对失败', 'danger');
+    });
+}
+
+// 更新系统状态
+function updateSystemStatus() {
+    const now = new Date();
+    const formattedTime = now.toLocaleString('zh-CN');
+    document.getElementById('lastUpdateTime').textContent = formattedTime;
+}
+</script>
+{% endblock %} 

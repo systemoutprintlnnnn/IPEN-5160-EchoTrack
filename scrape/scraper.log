@@ -6,3 +6,148 @@
 2025-04-07 23:44:03,913 - BilibiliScraper - INFO - 凭证状态: False
 2025-04-07 23:44:08,499 - BilibiliScraper - INFO - 首次运行爬虫任务
 2025-04-07 23:44:08,500 - BilibiliScraper - INFO - 开始爬取任务: 2025-04-07 23:44:08.500339
+2025-05-05 11:42:05,894 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 11:42:05,998 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 11:42:05,999 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 11:42:05.999995
+2025-05-05 11:42:06,121 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 11:42:06,229 - BilibiliScraper - INFO - 爬取关键词: iPhone 15, 页码: 1
+2025-05-05 11:42:06,442 - request - INFO - 激活 buvid3: [8175F808-0449-8890-1F1A-84129ACD84F425141infoc] 成功
+2025-05-05 11:45:43,251 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 11:45:43,380 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 11:45:43,382 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 11:45:43.382876
+2025-05-05 11:45:43,493 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 11:45:43,629 - BilibiliScraper - INFO - 爬取关键词: 英伟达 股票, 页码: 1
+2025-05-05 11:45:43,858 - request - INFO - 激活 buvid3: [284164AA-3E2A-B8C1-AAE2-5DE0B5DD4F8142489infoc] 成功
+2025-05-05 18:50:28,542 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 18:50:33,267 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 18:50:33,269 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 18:50:33.269013
+2025-05-05 18:50:37,875 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 18:50:42,640 - BilibiliScraper - INFO - 爬取关键词: 英伟达 股票, 页码: 1
+2025-05-05 18:50:42,827 - request - INFO - 激活 buvid3: [2A40752F-5D41-98D2-DE35-573204E1120E39689infoc] 成功
+2025-05-05 19:05:18,904 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 19:05:23,583 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 19:05:23,584 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 19:05:23.584728
+2025-05-05 19:05:28,252 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 19:05:32,895 - BilibiliScraper - INFO - 爬取关键词: 英伟达 股票, 页码: 1
+2025-05-05 19:05:42,161 - request - INFO - 激活 buvid3: [BE1CDE1E-B222-171F-8421-9E60DFBB6F4634432infoc] 成功
+2025-05-05 23:51:41,264 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 23:51:41,384 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 23:51:41,384 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 23:51:41.384640
+2025-05-05 23:51:41,532 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 23:51:41,661 - BilibiliScraper - INFO - 爬取关键词: 苹果 股票, 页码: 1
+2025-05-05 23:51:41,827 - request - INFO - 激活 buvid3: [224CE743-1C85-26F3-49FA-E2C7EF89E9EC97383infoc] 成功
+2025-05-05 23:54:59,646 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-05 23:54:59,772 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-05 23:54:59,773 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-05 23:54:59.773251
+2025-05-05 23:54:59,899 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-05 23:55:00,030 - BilibiliScraper - INFO - 爬取关键词: 苹果 股票, 页码: 1
+2025-05-05 23:55:00,228 - request - INFO - 激活 buvid3: [423DDC7E-A475-BD43-2F59-13A2776CD8D095718infoc] 成功
+2025-05-15 23:19:57,457 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-15 23:19:57,581 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-15 23:19:57,583 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-15 23:19:57.582083
+2025-05-15 23:19:57,772 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-15 23:19:58,010 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-15 23:20:07,342 - request - INFO - 激活 buvid3: [AA8A4D48-5E94-02C8-F16E-CFB06F63D22797295infoc] 成功
+2025-05-15 23:23:02,714 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-15 23:23:02,871 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-15 23:23:02,872 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-15 23:23:02.872835
+2025-05-15 23:23:03,007 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-15 23:23:03,157 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-15 23:23:03,333 - request - INFO - 激活 buvid3: [4E7251F7-44BF-78B9-6CE2-23A702E77E2877866infoc] 成功
+2025-05-15 23:26:13,688 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-15 23:26:13,846 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-15 23:26:13,847 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-15 23:26:13.847977
+2025-05-15 23:26:13,992 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-15 23:26:14,137 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-15 23:26:14,355 - request - INFO - 激活 buvid3: [2B342BFC-7786-CE8E-8F88-FD20E55C0AE668850infoc] 成功
+2025-05-16 00:30:43,656 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-16 00:30:43,777 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-16 00:30:43,777 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-16 00:30:43.777256
+2025-05-16 00:30:43,902 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-16 00:30:44,042 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-16 00:30:44,227 - request - INFO - 激活 buvid3: [053F7F05-817A-EE62-661D-354C217ACF8038475infoc] 成功
+2025-05-17 23:39:53,805 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:39:53,854 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:39:53,856 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:39:53.856403
+2025-05-17 23:39:53,974 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:39:54,141 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:41:19,087 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:41:19,172 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:41:19,173 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:41:19.173567
+2025-05-17 23:41:19,337 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:41:19,495 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:43:37,892 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:43:37,982 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:43:37,983 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:43:37.983363
+2025-05-17 23:43:38,183 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:43:38,373 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:44:01,814 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:44:01,921 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:44:01,922 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:44:01.922621
+2025-05-17 23:44:02,003 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:44:02,086 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:44:41,378 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:44:41,433 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:44:41,434 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:44:41.434400
+2025-05-17 23:44:41,606 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:44:41,746 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:45:28,032 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:45:28,123 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:45:28,125 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:45:28.125886
+2025-05-17 23:45:28,335 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:45:28,522 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-17 23:46:12,801 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-17 23:46:12,886 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-17 23:46:12,888 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-17 23:46:12.888637
+2025-05-17 23:46:13,096 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-17 23:46:13,314 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-18 00:24:18,527 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:24:18,587 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:24:18,590 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:24:18.590449
+2025-05-18 00:24:18,683 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:24:18,778 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-18 00:30:30,130 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:30:30,171 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:30:30,172 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:30:30.172076
+2025-05-18 00:30:30,279 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:30:30,395 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-18 00:33:38,748 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:33:38,801 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:33:38,802 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:33:38.801821
+2025-05-18 00:33:38,886 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:33:38,981 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-18 00:34:01,265 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:34:01,314 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:34:01,315 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:34:01.315612
+2025-05-18 00:34:01,392 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:34:01,481 - BilibiliScraper - INFO - 爬取关键词: 小米, 页码: 1
+2025-05-18 00:37:05,852 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:37:05,896 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:37:05,897 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:37:05.897393
+2025-05-18 00:37:06,070 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:37:06,199 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-18 00:58:26,379 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-18 00:58:26,428 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-18 00:58:26,430 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-18 00:58:26.430436
+2025-05-18 00:58:26,511 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-18 00:58:26,592 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-20 19:07:42,149 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-20 19:07:42,196 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-20 19:07:42,197 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-20 19:07:42.197397
+2025-05-20 19:07:42,338 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-20 19:07:42,546 - BilibiliScraper - INFO - 爬取关键词: 小米SU7, 页码: 1
+2025-05-20 19:12:41,115 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-20 19:12:41,159 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-20 19:12:41,160 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-20 19:12:41.160340
+2025-05-20 19:12:41,292 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-20 19:12:41,416 - BilibiliScraper - INFO - 爬取关键词: 极氪, 页码: 1
+2025-05-20 19:13:46,117 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-20 19:13:46,196 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-20 19:13:46,197 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-20 19:13:46.197697
+2025-05-20 19:13:46,329 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-20 19:13:46,502 - BilibiliScraper - INFO - 爬取关键词: 极氪, 页码: 1
+2025-05-20 21:14:28,537 - BilibiliScraper - INFO - 凭证状态: False
+2025-05-20 21:14:28,588 - BilibiliScraper - INFO - 首次运行爬虫任务
+2025-05-20 21:14:28,589 - BilibiliScraper - INFO - 开始爬取任务: 2025-05-20 21:14:28.589175
+2025-05-20 21:14:28,710 - BilibiliScraper - INFO - 凭证需要刷新: False
+2025-05-20 21:14:28,842 - BilibiliScraper - INFO - 爬取关键词: 特斯拉, 页码: 1

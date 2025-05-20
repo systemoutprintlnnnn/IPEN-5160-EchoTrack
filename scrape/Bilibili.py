@@ -17,7 +17,7 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("scrape/scraper.log"),
+        logging.FileHandler("scraper.log"),
         logging.StreamHandler()
     ]
 )

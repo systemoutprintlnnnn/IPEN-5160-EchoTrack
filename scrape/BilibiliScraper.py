@@ -281,7 +281,8 @@ class BilibiliScraper:
                 uname = cmt['member']['uname']
                 usex = cmt['member']['sex']
                 content = cmt['content']['message']
-                commentsInfo.append({'uname': uname, 'usex': usex, 'content': content})
+                ctime  = cmt['ctime']
+                commentsInfo.append({'uname': uname, 'usex': usex, 'content': content, 'ctime': ctime})
 
                 # print(f"{uname}({usex}): {content}")
                 # print(f"{cmt['member']['uname']}: {cmt['content']['message']}")
